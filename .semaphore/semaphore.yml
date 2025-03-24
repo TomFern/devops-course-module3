@@ -44,7 +44,7 @@ blocks:
             - cd 3-dast
             - pip install wapiti3
             - nohup python app.py &
-            - 'wapiti -u http://localhost:5000'
+            - 'wapiti -u http://localhost:5000 --exit-code medium'
             - artifact push job /root/.wapiti/generated_report
   - name: Code signing
     task:
