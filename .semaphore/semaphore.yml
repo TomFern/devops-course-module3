@@ -45,7 +45,7 @@ blocks:
             - pip install wapiti3
             - nohup python app.py &
             - 'wapiti -u http://localhost:5000 -f txt'
-            - artifact push job /root/.wapiti/generated_report
+            - cat localhost_5000*.txt
   - name: Code signing
     task:
       jobs:
