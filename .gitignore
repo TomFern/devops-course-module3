@@ -1,0 +1,6 @@
+*.pyc
+nohup.out
+__pycache__
+venv
+*.key
+bom.json
