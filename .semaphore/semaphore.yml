@@ -46,6 +46,7 @@ blocks:
             - nohup python app.py &
             - 'wapiti -u http://localhost:5000 -f json'
             - cat localhost_5000*.json
+            - artifact push job localhost_5000*.json
   - name: Code signing
     task:
       jobs:
