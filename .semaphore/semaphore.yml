@@ -44,8 +44,8 @@ blocks:
             - cd 3-dast
             - pip install wapiti3
             - nohup python app.py &
-            - 'wapiti -u http://localhost:5000 -f txt'
-            - cat localhost_5000*.txt
+            - 'wapiti -u http://localhost:5000 -f json'
+            - cat localhost_5000*.json
   - name: Code signing
     task:
       jobs:
