@@ -51,7 +51,7 @@ blocks:
             - gpg --import /root/private.key
             - gpg --output artifact.txt.sig --detach-sign artifact.txt
             - gpg --verify artifact.txt.sig artifact.txt
-            - artifact push project artifact.txt.sig
+            - artifact push --force project artifact.txt.sig
       secrets:
         - name: signature-keys
   - name: SBOM
@@ -62,4 +62,4 @@ blocks:
             - cd 5-sbom
             - pip install cyclonedx-bom
             - cyclonedx-py requirements -o bom.json
-            - artifact push project bom.json
+            - artifact push --force project bom.json
