@@ -41,7 +41,10 @@ blocks:
       jobs:
         - name: WIP
           commands:
+            - cd 3-dast
             - pip install wapiti3
+            - nohup python app.py &
+            - 'wapiti -u http://localhost:5000'
   - name: Code signing
     task:
       jobs:
