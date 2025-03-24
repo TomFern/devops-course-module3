@@ -1,0 +1,63 @@
+version: v1.0
+name: Continuous Integration Pipeline
+agent:
+  machine:
+    type: s1-kubernetes
+    os_image: ''
+  containers:
+    - name: main
+      image: 'registry.semaphoreci.com/python:3.12.1'
+fail_fast:
+  stop:
+    when: branch != 'main'
+auto_cancel:
+  running:
+    when: branch != 'main'
+  queued:
+    when: branch = 'main'
+global_job_config:
+  prologue:
+    commands:
+      - checkout
+blocks:
+  - name: Audit dependencies
+    task:
+      jobs:
+        - name: pip audit
+          commands:
+            - cd 1-dependency-scanning
+            - pip install pip-audit
+            - pip-audit -r requirements.txt
+  - name: SAST Scan
+    task:
+      jobs:
+        - name: Bandit
+          commands:
+            - cd 2-sast
+            - pip install bandit
+            - bandit -r vulnerable_script.py
+  - name: DAST Scan
+    task:
+      jobs:
+        - name: WIP
+          commands: []
+  - name: Code signing
+    task:
+      jobs:
+        - name: Sign
+          commands:
+            - cd 4-signing
+            - gpg --import ~/public.key
+            - gpg --import ~/private.key
+            - gpg --output artifact.txt.sig --detach-sign artifact.txt
+            - gpg --verify artifact.txt.sig artifact.txt
+            - artifact push project artifact.txt.sig
+  - name: SBOM
+    task:
+      jobs:
+        - name: Cyclonedx
+          commands:
+            - cd 5-sbom
+            - pip install cyclonedx-bom
+            - cyclonedx-py requirements -o bom.json
+            - artifact push project bom.json
