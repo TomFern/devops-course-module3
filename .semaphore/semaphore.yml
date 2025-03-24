@@ -41,7 +41,7 @@ blocks:
       jobs:
         - name: WIP
           commands:
-            - 'docker run -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t https://www.example.com'
+            - pip install wapiti3
   - name: Code signing
     task:
       jobs:
