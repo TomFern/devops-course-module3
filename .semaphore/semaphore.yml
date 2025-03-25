@@ -50,7 +50,7 @@ blocks:
         - name: zap
           commands:
             - cd 3-dast
-            - nohup python app.py &
+            - gunicorn -b 0:0:0:0:4000 app:app --daemon
             - sudo apt update && apt install -y wget default-jre
             - 'wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.0/ZAP_2_16_0_unix.sh'
             - bash ZAP_2_16_0_unix.sh -q
