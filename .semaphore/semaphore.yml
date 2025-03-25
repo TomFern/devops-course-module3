@@ -55,7 +55,7 @@ blocks:
             - sudo apt update && apt install -y wget default-jre
             - 'wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.0/ZAP_2_16_0_unix.sh'
             - bash ZAP_2_16_0_unix.sh -q
-            - '/usr/local/bin/zap.sh -cmd -quickurl http://127.0.0.1:4000 -quickprogress -quickout /root/zap.html'
+            - '/usr/local/bin/zap.sh -cmd -quickurl http://localhost:4000 -quickprogress -quickout /root/zap.html'
             - artifact push job /root/zap.html
             - '#/usr/local/bin/zap.sh -daemon -port 8090 -config api.disablekey=true -config scanner.threadPerHost=10'
             - '# 2. Wait for ZAP to initialize. Use zap-cli status with a timeout to ensure it''s ready.'
