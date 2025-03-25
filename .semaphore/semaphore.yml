@@ -50,13 +50,15 @@ blocks:
         - name: zap
           commands:
             - cd 3-dast
+            - nohup python app.py &
             - sudo apt update && apt install -y wget default-jre
             - 'wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.0/ZAP_2_16_0_unix.sh'
             - bash ZAP_2_16_0_unix.sh -q
-            - pip install zapcli
+            - '/usr/local/bin/zap.sh -cmd -quickurl http://localhost:5000 -quickprogress -quickout /root/zap.html'
+            - artifact push job /root/zap.html
             - '#/usr/local/bin/zap.sh -daemon -port 8090 -config api.disablekey=true -config scanner.threadPerHost=10'
             - '# 2. Wait for ZAP to initialize. Use zap-cli status with a timeout to ensure it''s ready.'
-            - zap-cli status -t 120
+            - '#zap-cli status -t 120'
             - '# 3. Run a spider scan on the target URL to discover all links.'
             - '#zap-cli spider http://example.com'
             - '# 4. Start an active scan on the target URL to look for vulnerabilities.'
