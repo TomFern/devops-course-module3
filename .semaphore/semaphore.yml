@@ -39,14 +39,6 @@ blocks:
   - name: DAST Scan
     task:
       jobs:
-        - name: WIP
-          commands:
-            - cd 3-dast
-            - pip install wapiti3
-            - nohup python app.py &
-            - 'wapiti -u http://localhost:5000 -f json'
-            - cat localhost_5000*.json
-            - artifact push job localhost_5000*.json
         - name: zap
           commands:
             - cd 3-dast
