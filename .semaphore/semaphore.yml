@@ -2,7 +2,7 @@ version: v1.0
 name: Continuous Integration Pipeline
 agent:
   machine:
-    type: e1-standard-8
+    type: s1-kubernetes
     os_image: ubuntu2004
   containers:
     - name: main
@@ -39,29 +39,15 @@ blocks:
   - name: DAST Scan
     task:
       jobs:
-        - name: zap
+        - name: wapiti
           commands:
             - cd 3-dast
             - pip install -r requirements.txt
             - 'gunicorn -b 0:0:0:0:4000 app:app --daemon'
-            - sudo apt update && apt install -y wget default-jre
-            - 'wget https://github.com/zaproxy/zaproxy/releases/download/v2.16.0/ZAP_2_16_0_unix.sh'
-            - bash ZAP_2_16_0_unix.sh -q
-            - '/usr/local/bin/zap.sh -cmd -quickurl http://localhost:4000 -quickprogress -quickout /root/zap.html'
-            - artifact push job /root/zap.html
-            - '#/usr/local/bin/zap.sh -daemon -port 8090 -config api.disablekey=true -config scanner.threadPerHost=10'
-            - '# 2. Wait for ZAP to initialize. Use zap-cli status with a timeout to ensure it''s ready.'
-            - '#zap-cli status -t 120'
-            - '# 3. Run a spider scan on the target URL to discover all links.'
-            - '#zap-cli spider http://example.com'
-            - '# 4. Start an active scan on the target URL to look for vulnerabilities.'
-            - '#zap-cli active-scan http://example.com'
-            - '# 5. (Optional) Wait for the active scan to complete. You can check the progress using:'
-            - '#zap-cli status'
-            - '# 6. Generate a security report in HTML format.'
-            - '#zap-cli report -o zap_report.html -f html'
-            - '# 7. Shut down the ZAP daemon once scanning and reporting are complete.'
-            - '#zap-cli shutdown'
+            - pip install wapiti3
+            - 'wapiti -u http://localhost:5000 -f html'
+            - cat localhost_5000*.html
+            - artifact push job localhost_5000*.html
   - name: Code signing
     task:
       jobs:
