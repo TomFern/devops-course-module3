@@ -11,5 +11,5 @@
 
 - On the pipeline use the container image: `registry.semaphoreci.com/python:3.12.1`
 - Check pipeline.png in this folder to see an example.
-- If you have trouble running `app.py` in CI try using `nohup python app.py &`
-- If an audit/scanning tools is causing the pipeline to stop, you can add `|| true` to the end of the failing command so the pipeline doesn't fail. Use this only for debugging purposes.
+- The `solution` branch contains a working pipeline
+- If an audit/scanning tools is causing the pipeline to stop, you can append `|| true` to the end of the failing command so the pipeline doesn't fail. Use this only for debugging purposes.
