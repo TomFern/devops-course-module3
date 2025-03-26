@@ -50,14 +50,16 @@ blocks:
   - name: Code signing
     task:
       jobs:
-        - name: Sign
+        - name: sign
           commands:
             - cd 4-signing
-            - gpg --import /root//public.key
+            - gpg --import /root/public.key
             - gpg --import /root/private.key
             - gpg --output artifact.txt.sig --detach-sign artifact.txt
             - gpg --verify artifact.txt.sig artifact.txt
             - artifact push project --force artifact.txt.sig
+      secrets:
+        - name: signature-keys
   - name: SBOM
     task:
       jobs:
