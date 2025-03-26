@@ -45,9 +45,8 @@ blocks:
             - pip install -r requirements.txt
             - 'gunicorn -b 0:0:0:0:4000 app:app --daemon'
             - pip install wapiti3
-            - 'wapiti -u http://localhost:5000 -f html'
-            - cat localhost_5000*.html
-            - artifact push job localhost_5000*.html
+            - 'wapiti -u http://localhost:4000 -f html'
+            - artifact push job .wapiti/generated_report
   - name: Code signing
     task:
       jobs:
