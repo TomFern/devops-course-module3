@@ -12,3 +12,4 @@ Each folder contains an exercise. Do them in the following order:
 - `4-sast`
 - `5-dast`
 - `6-pipeline`
+
