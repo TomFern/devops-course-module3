@@ -5,10 +5,11 @@
 ## Steps
 
 1. Setup a pipeline that run the tests. Refer to pipeline.png for an example of a pipeline that runs the tests.
-2. Fix the errors revealed until the pipeline is green.
+2. Bonus points if you can fix the errors and get the pipeline into a green state
 
 ## Tips
 
 - On the pipeline use the container image: `registry.semaphoreci.com/python:3.12.1`
 - Check pipeline.png in this folder to see an example.
 - If you have trouble running `app.py` in CI try using `nohup python app.py &`
+- If an audit/scanning tools is causing the pipeline to stop, you can add `|| true` to the end of the failing command so the pipeline doesn't fail. Use this only for debugging purposes.

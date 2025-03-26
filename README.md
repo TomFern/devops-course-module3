@@ -6,9 +6,9 @@
 
 Each folder contains an exercise. Do them in the following order:
 
-- `1-dependency-scanning`
-- `2-sast`
-- `3-dast`
-- `4-signing`
-- `5-sbom`
+- `1-signing`
+- `2-sbom`
+- `3-dependency-scanning`
+- `4-sast`
+- `5-dast`
 - `6-pipeline`

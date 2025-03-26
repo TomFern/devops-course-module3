@@ -20,39 +20,12 @@ global_job_config:
     commands:
       - checkout
 blocks:
-  - name: Audit dependencies
-    task:
-      jobs:
-        - name: pip audit
-          commands:
-            - cd 1-dependency-scanning
-            - pip install pip-audit
-            - pip-audit -r requirements.txt || true
-  - name: SAST Scan
-    task:
-      jobs:
-        - name: Bandit
-          commands:
-            - cd 2-sast
-            - pip install bandit
-            - bandit -r vulnerable_script.py || true
-  - name: DAST Scan
-    task:
-      jobs:
-        - name: wapiti
-          commands:
-            - cd 3-dast
-            - pip install -r requirements.txt
-            - 'gunicorn -b 0:0:0:0:4000 app:app --daemon'
-            - pip install wapiti3
-            - 'wapiti -u http://localhost:4000 -f html'
-            - artifact push job /root/.wapiti/generated_report
   - name: Code signing
     task:
       jobs:
         - name: sign
           commands:
-            - cd 4-signing
+            - cd 1-signing
             - gpg --import /root/public.key
             - gpg --import /root/private.key
             - gpg --output artifact.txt.sig --detach-sign artifact.txt
@@ -65,7 +38,34 @@ blocks:
       jobs:
         - name: Cyclonedx
           commands:
-            - cd 5-sbom
+            - cd 2-sbom
             - pip install cyclonedx-bom
             - cyclonedx-py requirements -o bom.json
             - artifact push project --force bom.json
+  - name: Audit dependencies
+    task:
+      jobs:
+        - name: pip audit
+          commands:
+            - cd 3-dependency-scanning
+            - pip install pip-audit
+            - pip-audit -r requirements.txt || true
+  - name: SAST Scan
+    task:
+      jobs:
+        - name: Bandit
+          commands:
+            - cd 4-sast
+            - pip install bandit
+            - bandit -r vulnerable_script.py || true
+  - name: DAST Scan
+    task:
+      jobs:
+        - name: wapiti
+          commands:
+            - cd 5-dast
+            - pip install -r requirements.txt
+            - 'gunicorn -b 0:0:0:0:4000 app:app --daemon'
+            - pip install wapiti3
+            - 'wapiti -u http://localhost:4000 -f html'
+            - artifact push job /root/.wapiti/generated_report
