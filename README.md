@@ -1,4 +1,4 @@
-# Module 4 - Shift-left security
+# Module 3 - Shift-left security
 
 **Goal**: Learn automated security scanning and shift-left security on pipeline.
 
