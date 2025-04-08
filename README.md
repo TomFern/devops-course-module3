@@ -1,4 +1,4 @@
-# Module 4 - Shift-left security
+# Module 3 - Shift-left security
 
 **Goal**: Learn automated security scanning and shift-left security on pipeline.
 
@@ -12,4 +12,3 @@ Each folder contains an exercise. Do them in the following order:
 - `4-sast`
 - `5-dast`
 - `6-pipeline`
-
